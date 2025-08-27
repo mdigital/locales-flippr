@@ -12,6 +12,11 @@ html, body {
   width: 100vw;
   margin: 0;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #root {
@@ -73,6 +78,7 @@ html, body {
   overflow: hidden;
   border-radius: 0;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  touch-action: pan-x;
 }
 
 .penguin-card.top-card {
