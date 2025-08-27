@@ -4,6 +4,7 @@ import './App.css'
 const penguinOrder = ['baz', 'shelley', 'emma', 'chad', 'cody']
 
 function App() {
+  const [isNightMode, setIsNightMode] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(-1) // Start at -1 to show main.png first
   const [showResults, setShowResults] = useState(false)
   const [swipeStats, setSwipeStats] = useState({})
@@ -30,6 +31,25 @@ function App() {
       }, {})
       setSwipeStats(initialStats)
     }
+  }, [])
+
+  // Check if it's night time (11pm - 10am)
+  useEffect(() => {
+    const checkNightMode = () => {
+      const now = new Date()
+      const hour = now.getHours()
+      // Night mode from 11pm (23:00) to 10am (10:00)
+      const isNight = hour >= 23 || hour < 10
+      setIsNightMode(isNight)
+    }
+
+    // Check immediately
+    checkNightMode()
+
+    // Check every minute
+    const interval = setInterval(checkNightMode, 60000)
+
+    return () => clearInterval(interval)
   }, [])
 
   const saveStats = (newStats) => {
@@ -269,6 +289,11 @@ function App() {
     }
     
     return cards
+  }
+
+  // Night mode screen (11pm - 10am)
+  if (isNightMode) {
+    return <div className="night-mode-screen"></div>
   }
 
   return (
