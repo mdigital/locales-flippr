@@ -1,0 +1,27 @@
+<svg 
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="34.219mm" height="30.339mm">
+<defs>
+<filter id="Filter_0">
+    <feOffset in="SourceAlpha" dx="0" dy="5" />
+    <feGaussianBlur result="blurOut" stdDeviation="2.828" />
+    <feFlood flood-color="rgb(87, 49, 13)" result="floodOut" />
+    <feComposite operator="out" in="floodOut" in2="blurOut" result="compOut" />
+    <feComposite operator="in" in="compOut" in2="SourceAlpha" />
+    <feComponentTransfer><feFuncA type="linear" slope="0.38"/></feComponentTransfer>
+    <feBlend mode="normal" in2="SourceGraphic" />
+</filter>
+<linearGradient id="PSgrad_0" x1="54.464%" x2="0%" y1="83.867%" y2="0%">
+  <stop offset="0%" stop-color="rgb(85,204,124)" stop-opacity="1" />
+  <stop offset="100%" stop-color="rgb(245,249,127)" stop-opacity="1" />
+</linearGradient>
+
+</defs>
+<g filter="url(#Filter_0)">
+<path fill-rule="evenodd"  fill="rgb(0, 0, 0)"
+ d="M69.805,2.686 C57.986,2.686 48.404,14.285 48.404,28.594 C48.404,14.285 38.823,2.686 27.003,2.686 C15.183,2.686 5.602,14.617 5.602,28.594 C5.602,55.896 48.404,80.410 48.404,80.410 C48.404,80.410 91.208,55.896 91.208,28.594 C91.208,14.617 81.625,2.686 69.805,2.686 Z"/>
+</g>
+<path fill="url(#PSgrad_0)"
+ d="M69.805,2.686 C57.986,2.686 48.404,14.285 48.404,28.594 C48.404,14.285 38.823,2.686 27.003,2.686 C15.183,2.686 5.602,14.617 5.602,28.594 C5.602,55.896 48.404,80.410 48.404,80.410 C48.404,80.410 91.208,55.896 91.208,28.594 C91.208,14.617 81.625,2.686 69.805,2.686 Z"/>
+</svg>
