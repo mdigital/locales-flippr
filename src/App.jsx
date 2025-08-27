@@ -57,6 +57,12 @@ function App() {
     localStorage.setItem('penguinSwipeStats', JSON.stringify(newStats))
   }
 
+  const playSound = (soundFile) => {
+    const audio = new Audio(soundFile)
+    audio.volume = 0.5
+    audio.play().catch(console.error)
+  }
+
   const handleSwipe = (direction) => {
     if (currentIndex === -1) {
       setCurrentIndex(0)
@@ -70,6 +76,9 @@ function App() {
         [currentPenguin]: swipeStats[currentPenguin] + 1
       }
       saveStats(newStats)
+      playSound('./like.mp3')
+    } else if (direction === 'left') {
+      playSound('./dislike.mp3')
     }
 
     if (currentIndex >= penguinOrder.length - 1) {
