@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-const penguinOrder = ['baz', 'shelley', 'emma', 'chad', 'cody']
+const penguinOrder = ['baz', 'shelley', 'emma', 'chad', 'cindy', 'cody']
 
 function App() {
   const [isNightMode, setIsNightMode] = useState(false)
@@ -19,6 +19,15 @@ function App() {
   const [showCross, setShowCross] = useState(false)
   const [crossScale, setCrossScale] = useState(0)
   const [crossOpacity, setCrossOpacity] = useState(0)
+
+  // Preload sounds for instant playback
+  const [preloadedSounds] = useState(() => {
+    const likeSound = new Audio('./like.mp3')
+    const dislikeSound = new Audio('./dislike.mp3')
+    likeSound.volume = 0.5
+    dislikeSound.volume = 0.5
+    return { likeSound, dislikeSound }
+  })
 
   useEffect(() => {
     const savedStats = localStorage.getItem('penguinSwipeStats')
@@ -38,8 +47,8 @@ function App() {
     const checkNightMode = () => {
       const now = new Date()
       const hour = now.getHours()
-      // Night mode from 11pm (23:00) to 10am (10:00)
-      const isNight = hour >= 23 || hour < 10
+      // Night mode from 11pm (23:00) to 9:45am
+      const isNight = hour >= 23 || hour < 9 || (hour === 9 && now.getMinutes() < 45)
       setIsNightMode(isNight)
     }
 
@@ -57,9 +66,9 @@ function App() {
     localStorage.setItem('penguinSwipeStats', JSON.stringify(newStats))
   }
 
-  const playSound = (soundFile) => {
-    const audio = new Audio(soundFile)
-    audio.volume = 0.5
+  const playSound = (soundType) => {
+    const audio = soundType === 'like' ? preloadedSounds.likeSound : preloadedSounds.dislikeSound
+    audio.currentTime = 0 // Reset to beginning in case it was played before
     audio.play().catch(console.error)
   }
 
@@ -76,9 +85,9 @@ function App() {
         [currentPenguin]: swipeStats[currentPenguin] + 1
       }
       saveStats(newStats)
-      playSound('./like.mp3')
+      playSound('like')
     } else if (direction === 'left') {
-      playSound('./dislike.mp3')
+      playSound('dislike')
     }
 
     if (currentIndex >= penguinOrder.length - 1) {
@@ -237,7 +246,7 @@ function App() {
     return (
       <div className="app results-page">
         <div className="flippr-header">
-          <div className="flippr-logo">🐧 flippr</div>
+          <div className="flippr-logo"><img src="./images/flipr-logo.png"/></div>
         </div>
         
         <div className="results-content">
@@ -256,7 +265,7 @@ function App() {
             {sortedPenguins.map((penguin, index) => (
               <div key={penguin.name} className="penguin-stat">
                 <span className="penguin-name">{penguin.name.charAt(0).toUpperCase() + penguin.name.slice(1)}</span>
-                <img src="./heart.svg" alt="heart" className="heart-icon" />
+                <img src="./pink-heart.svg" alt="heart" className="heart-icon" />
                 <span className="penguin-count">{penguin.count}</span>
               </div>
             ))}
